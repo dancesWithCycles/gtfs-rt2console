@@ -4,14 +4,19 @@
   "description": "decode GTFS Realtime and log to console",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Stefan Begerad",
   "license": "GPL-3.0",
   "dependencies": {
     "debug": "^3.2.7",
+    "dotenv": "^8.2.0",
     "gtfs-realtime-bindings": "^0.0.6",
-    "nodemon": "^2.0.7",
     "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }

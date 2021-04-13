@@ -1,10 +1,14 @@
 const gtfsRt = require('./gtfsRtDecode');
 const debug = require('debug')('gtfs');
 var request = require('request');
+require('dotenv').config();
+
+const URL=process.env.URL||'https://dedriver.org/gtfs-rt/vehiclePositions.pb';
+debug('URL: '+URL)
 
 var requestSettings = {
     method: 'GET',
-    url:'https://dedriver.org/gtfs-rt/vehiclePostions.pb',
+    url:URL,
     encoding: null
 };
 
