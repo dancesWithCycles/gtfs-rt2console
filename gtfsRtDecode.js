@@ -2,7 +2,7 @@ const debug = require('debug')('gtfs');
 const GtfsRealtimeBindings = require('gtfs-realtime-bindings');
 
 function decode(buffer){
-    console.log('decode');
+    debug('decode...');
 
     var feed = GtfsRealtimeBindings.transit_realtime.FeedMessage.decode(buffer);
     if(feed){
@@ -16,11 +16,40 @@ function decode(buffer){
 	    }
 	}
 	feed.entity.forEach(function(entity) {
-	    if (entity.trip_update) {
-		debug('trip update')
+	    if (entity.tripUpdate) {
+		debug('tripUpdate')
+		const tripUpdate=entity.tripUpdate;
+		if(tripUpdate.trip){
+		    debug('TripDescriptor')
+		    const trip=tripUpdate.trip
+		    if(trip.tripId){
+			debug('trip_id: %s',trip.tripId)
+		    }
+		    if(trip.routeId){
+			debug('route_id: %s',trip.routeId)
+		    }
+		    if(trip.directionId){
+			debug('direction_id: %s',trip.directionId)
+		    }
+		    if(trip.startTime){
+			debug('start_time: %s',trip.startTime)
+		    }
+		    if(trip.startDate){
+			debug('start_date: %s',trip.startDate)
+		    }
+		    if(trip.scheduleRelationship){
+			debug('schedule_relationship: %s',trip.scheduleRelationship)
+		    }
+		}
+		if(tripUpdate.vehicle){
+		    debug('VehicleDescriptor')
+		}
+		if(tripUpdate.timestamp){
+		    debug('timestamp: %s',tripUpdate.timestamp)
+		}
 	    }else if(entity.vehicle){
 		const vehPos=entity.vehicle;
-		debug('vehicle position')
+		debug('vehiclePosition')
 		if(vehPos.position){
 		    const pos=vehPos.position;
 		    debug('position')
@@ -50,6 +79,7 @@ function decode(buffer){
     }else{
 	debug('feed unavailable')
     }
+    debug('...done.')
     return feed;
 }
 module.exports = {decode}
